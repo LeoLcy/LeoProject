@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using LeoProject.Common.Database;
 
 namespace LeoProject.LionWorkflow.Model
 {

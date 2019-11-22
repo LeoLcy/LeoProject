@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-
+using LeoProject.Common.Database;
 namespace LeoProject.LionWorkflow.Model
 {
     /// <summary>

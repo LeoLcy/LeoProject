@@ -31,9 +31,14 @@ namespace LeoProject.LionOA.Model
         /// </summary>
         public bool IsAutoExpand { get; set; } = true;
         /// <summary>
-        /// 节点图标文件名称
+        /// 菜单图标(可选)
         /// </summary>
         public string Icon { get; set; } = "";
+        /// <summary>
+        /// 前端组件(.vue)
+        /// </summary>
+        [MaxLength(255)]
+        public string Component { get; set; }
         /// <summary>
         /// 排序号
         /// </summary>
