@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>LeoProject.Infrastructure</AssemblyName>
+    <RootNamespace>LeoProject.Infrastructure</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

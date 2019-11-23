@@ -1,9 +1,10 @@
-﻿using LeoProject.Common.Database;
+﻿
+using LeoProject.Infrastructure.Database;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LeoProject.LionWorkflow.Model
+namespace LeoProject.LionWorkflow.Core
 {
     /// <summary>
     /// 工作流实体对象

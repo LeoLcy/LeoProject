@@ -1,17 +1,20 @@
-﻿using System;
+﻿using LeoProject.Infrastructure.Database;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using LeoProject.Common.Database;
-namespace LeoProject.LionWorkflow.Model
+
+namespace LeoProject.LionOA.Core
 {
     /// <summary>
-    /// 工作流分类表 类别表
+    /// 公司部门
     /// </summary>
-    public class WfWorkflowCategory: EntityTree
+    [Table("SysDepartment", Schema = "sys")]
+    public class SysDepartment:EntityTree
     {
         /// <summary>
-        /// 名字
+        /// 部门名称
         /// </summary>
         [MaxLength(50)]
         public string Name { get; set; } = "";
@@ -20,7 +23,7 @@ namespace LeoProject.LionWorkflow.Model
         /// </summary>
         public int Sort { get; set; } = 0;
         /// <summary>
-        /// 备注
+        /// 部门备注
         /// </summary>
         [MaxLength(200)]
         public string Remark { get; set; } = "";

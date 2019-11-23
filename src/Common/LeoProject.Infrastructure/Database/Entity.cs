@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace LeoProject.Common.Database
+namespace LeoProject.Infrastructure.Database
 {
     /// <summary>
     /// 数据库对象公共实体，主键为long

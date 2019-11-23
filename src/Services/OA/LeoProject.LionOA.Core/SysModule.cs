@@ -1,11 +1,11 @@
-﻿using LeoProject.Common.Database;
+﻿using LeoProject.Infrastructure.Database;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace LeoProject.LionOA.Model
+namespace LeoProject.LionOA.Core
 {
     /// <summary>
     /// 功能模块表
@@ -39,6 +39,13 @@ namespace LeoProject.LionOA.Model
         /// </summary>
         [MaxLength(255)]
         public string Component { get; set; }
+        /// <summary>
+        /// 功能权限 主要针对操作的功能权限 以逗号分隔，记录Code
+        /// add(新增)update(修改)delete(删除)export(导出)
+        /// 也可以是针对的接口
+        /// </summary>
+        [MaxLength(255)]
+        public string FuncPermission { get; set; }
         /// <summary>
         /// 排序号
         /// </summary>

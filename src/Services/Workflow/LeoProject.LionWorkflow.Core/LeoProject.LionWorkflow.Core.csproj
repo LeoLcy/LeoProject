@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\LeoProject.Common\LeoProject.Common.csproj" />
+    <ProjectReference Include="..\..\..\Common\LeoProject.Infrastructure\LeoProject.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

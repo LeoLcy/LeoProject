@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using LeoProject.Common.Database;
+using LeoProject.Infrastructure.Database;
 
-namespace LeoProject.LionWorkflow.Model
+namespace LeoProject.LionWorkflow.Core
 {
     /// <summary>
     /// 流程执行实例

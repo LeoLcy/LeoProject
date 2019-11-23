@@ -1,11 +1,11 @@
-﻿using LeoProject.Common.Database;
+﻿using LeoProject.Infrastructure.Database;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace LeoProject.LionOA.Model
+namespace LeoProject.LionOA.Core
 {
     /// <summary>
     /// 系统角色表
