@@ -30,7 +30,7 @@ namespace LeoProject.Infrastructure.Database
         [MaxLength(200)]
         public string TreePath { get; set; } = "";
     }
-    public class Entity<TKey>: IIsDelete,IIsEnable
+    public class Entity<TKey> : IEntity<TKey>, IIsDelete, IIsEnable
     {
         /// <summary>
         /// 主键
@@ -61,6 +61,30 @@ namespace LeoProject.Infrastructure.Database
         /// 是否删除
         /// </summary>
         public bool IsDelete { get; set; } = false;
+    }
+    /// <summary>
+    /// 基础类型
+    /// </summary>
+    /// <typeparam name="TKey">主键类型</typeparam>
+    public interface IEntity<TKey>
+    {
+        TKey Id { get; set; }
+        /// <summary>
+        /// 创建人
+        /// </summary>
+        TKey CreateBy { get; set; }
+        /// <summary>
+        /// 创建人
+        /// </summary>
+        DateTime CreateTime { get; set; }
+        /// <summary>
+        /// 更新人
+        /// </summary>
+        TKey UpdateBy { get; set; }
+        /// <summary>
+        /// 更新时间
+        /// </summary>
+        DateTime UpdateTime { get; set; }
     }
     public interface IIsDelete
     {
