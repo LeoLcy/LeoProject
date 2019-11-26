@@ -10,8 +10,9 @@ namespace LeoProject.Infrastructure.Database.Data
 {
     public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : Entity<long>
     {
-        DbContextBase db;
-        public BaseRepository(DbContextBase _db)
+        #region 初始化对象
+        BaseDbContext  db;
+        public BaseRepository(BaseDbContext  _db)
         {
             db = _db;
         }
@@ -19,13 +20,95 @@ namespace LeoProject.Infrastructure.Database.Data
         {
             get { return db.Set<TEntity>(); }
         }
+        #endregion
+        #region Async
+        #region select
+        public async Task<TEntity> GetByIdAsync(long primaryId)
+        {
+            var entity = await DBSet.Where(m => m.Id == primaryId).FirstOrDefaultAsync();
+            return entity;
+        }
+        public async Task<TEntity> FindFirstOrDefaultAsync(Expression<Func<TEntity, bool>> exp)
+        {
+            var entity = await DBSet.Where(exp).FirstOrDefaultAsync();
+            return entity;
+        }
+        public async Task<TEntity> FindSingleAsync(Expression<Func<TEntity, bool>> exp)
+        {
+            return await DBSet.SingleAsync(exp);
+        }
+        public async Task<bool> IsExistAsync(Expression<Func<TEntity, bool>> exp)
+        {
+            return await DBSet.AnyAsync(exp);
+        }
+        #endregion
+        #region count
+        public async Task<int> CountAsync(Expression<Func<TEntity, bool>> expression)
+        {
+            var count =await DBSet.Where(expression).CountAsync();
+            return count;
+        }
+        #endregion
+        #region insert, update, delete
+        public async Task<int> InsertAsync(TEntity entity)
+        {
+            DBSet.Add(entity);
+            return await SaveAsync();
+        }
+        public async Task<int> InsertRangeAsync(IEnumerable<TEntity> entityList)
+        {
+            DBSet.AddRange(entityList);
+            return await SaveAsync();
+        }
+        public async Task<int> UpdateAsync(TEntity entity)
+        {
+            DBSet.Update(entity);
+            return await SaveAsync();
+        }
+        public async Task<int> UpdateRangeAsync(IEnumerable<TEntity> entityList)
+        {
+            DBSet.UpdateRange(entityList);
+            return await SaveAsync();
+        }
+        public async Task<int> DeleteByIdAsync(long primaryId)
+        {
+            var entity = DBSet.Where(m => m.Id == primaryId).FirstOrDefault();
+            DBSet.Remove(entity);
+            return await SaveAsync();
+        }
+        public async Task<int> DeleteAsync(TEntity entity)
+        {
+            DBSet.Remove(entity);
+
+            return await SaveAsync();
+        }
+        public async Task<int> DeleteAsync(Expression<Func<TEntity, bool>> exp)
+        {
+            var entities = DBSet.Where(exp);
+            DBSet.RemoveRange(entities);
+
+            return await SaveAsync();
+        }
+        public async Task<int> DeleteRangeAsync(IEnumerable<long> ids)
+        {
+            var entities = DBSet.Where(m => ids.Contains(m.Id));
+            DBSet.RemoveRange(entities);
+            return await SaveAsync();
+        }
+        #endregion
+        #endregion
         #region select
         public TEntity GetById(long primaryId)
         {
             var entity = DBSet.Where(m => m.Id == primaryId).FirstOrDefault();
             return entity;
         }
-        public TEntity FindSingle(Expression<Func<TEntity, bool>> exp = null)
+        public TEntity FindFirstOrDefault(Expression<Func<TEntity, bool>> exp)
+        {
+            var entity = DBSet.Where(exp).FirstOrDefault();
+            return entity;
+        }
+        public TEntity FindSingle(Expression<Func<TEntity, bool>> exp)
         {
             return DBSet.Single(exp);
         }
@@ -77,6 +160,12 @@ namespace LeoProject.Infrastructure.Database.Data
         {
             var entity = DBSet.Where(m => m.Id == primaryId).FirstOrDefault();
             DBSet.Remove(entity);
+            return Save();
+        }
+        public int Delete(TEntity entity)
+        {
+            DBSet.Remove(entity);
+
             return Save();
         }
         public int Delete(Expression<Func<TEntity, bool>> exp)

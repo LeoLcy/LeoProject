@@ -3,32 +3,56 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LeoProject.Infrastructure.Database.Data
 {
-    public interface IRepository<T> where T : IEntity<long>
+    public interface IRepository<TEntity> where TEntity : IEntity<long>
     {
+        #region Async
         #region select
-        T GetById(long primaryId);
-        T FindSingle(Expression<Func<T, bool>> exp = null);
-        bool IsExist(Expression<Func<T, bool>> exp);
-        IQueryable<T> Find(Expression<Func<T, bool>> exp = null);
-        IQueryable<T> Find(int pageindex = 1, int pagesize = 10, string orderby = "",
-            Expression<Func<T, bool>> exp = null);
+         Task<TEntity> GetByIdAsync(long primaryId);
+         Task<TEntity> FindFirstOrDefaultAsync(Expression<Func<TEntity, bool>> exp);
+         Task<TEntity> FindSingleAsync(Expression<Func<TEntity, bool>> exp);
+         Task<bool> IsExistAsync(Expression<Func<TEntity, bool>> exp);
         #endregion
         #region count
-        int Count(Expression<Func<T,bool>> expression);
+        Task<int> CountAsync(Expression<Func<TEntity, bool>> expression);
         #endregion
         #region insert, update, delete
-        int Insert(T entity);
-        int InsertBatch(IEnumerable<T> entityList);
-        int Update(T entity);
-        int UpdateBatch(IEnumerable<T> entityList);
-        int DeleteById(dynamic primaryId);
-        int Delete(T entity);
-        int DeleteBatch(IEnumerable<dynamic> ids);
+        Task<int> InsertAsync(TEntity entity);
+        Task<int> InsertRangeAsync(IEnumerable<TEntity> entityList);
+        Task<int> UpdateAsync(TEntity entity);
+        Task<int> UpdateRangeAsync(IEnumerable<TEntity> entityList);
+        Task<int> DeleteByIdAsync(long primaryId);
+        Task<int> DeleteAsync(TEntity entity);
+        Task<int> DeleteAsync(Expression<Func<TEntity, bool>> exp);
+        Task<int> DeleteRangeAsync(IEnumerable<long> ids);
+        #endregion
+        #endregion
+        #region select
+        TEntity GetById(long primaryId);
+        TEntity FindFirstOrDefault(Expression<Func<TEntity, bool>> exp);
+        TEntity FindSingle(Expression<Func<TEntity, bool>> exp);
+        bool IsExist(Expression<Func<TEntity, bool>> exp);
+        IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> exp = null);
+        IQueryable<TEntity> Find(int pageindex = 1, int pagesize = 10, 
+            Expression<Func<TEntity, bool>> exp = null);
+        #endregion
+        #region count
+        int Count(Expression<Func<TEntity,bool>> expression);
+        #endregion
+        #region insert, update, delete
+        int Insert(TEntity entity);
+        int InsertRange(IEnumerable<TEntity> entityList);
+        int Update(TEntity entity);
+        int UpdateRange(IEnumerable<TEntity> entityList);
+        int DeleteById(long primaryId);
+        int Delete(TEntity entity);
+        int Delete(Expression<Func<TEntity, bool>> exp);
+        int DeleteRange(IEnumerable<long> ids);
         #endregion
 
-        int ExecuteSql(string sql);
+        int ExecuteSql(string sql, params object[] parameters);
     }
 }

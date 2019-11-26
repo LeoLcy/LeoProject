@@ -7,9 +7,9 @@ using System.Text;
 
 namespace LeoProject.Infrastructure.Database.Data
 {
-   public  class DbContextBase: DbContext
+   public  class BaseDbContext : DbContext
     {
-        public DbContextBase(DbContextOptions options) : base(options)
+        public BaseDbContext (DbContextOptions options) : base(options)
         {
         }
         /// <summary>

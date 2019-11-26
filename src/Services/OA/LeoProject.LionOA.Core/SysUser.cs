@@ -16,8 +16,8 @@ namespace LeoProject.LionOA.Core
         /// <summary>
         /// 用户账号
         /// </summary>
-        [MaxLength(100)]
-        public string Account { get; set; } = "";
+        //[MaxLength(100)]
+        //public string Account { get; set; } = "";
         /// <summary>
         /// 用户名
         /// </summary>

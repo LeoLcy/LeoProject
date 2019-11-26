@@ -7,7 +7,7 @@ using System.Text;
 
 namespace LeoProject.LionOA.EntityFrameworkCore.EntityFrameworkCore
 {
-    public class OADbContext : DbContextBase
+    public class OADbContext : BaseDbContext 
     {
         public OADbContext(DbContextOptions<OADbContext> options)
        : base(options)
