@@ -21,6 +21,7 @@ namespace LeoProject.LionOA.Core
         /// <summary>
         /// 主页面URL
         /// </summary>
+        [MaxLength(255)]
         public string Url { get; set; } = "";
         /// <summary>
         /// 是否叶子节点
@@ -33,6 +34,7 @@ namespace LeoProject.LionOA.Core
         /// <summary>
         /// 菜单图标(可选)
         /// </summary>
+        [MaxLength(30)]
         public string Icon { get; set; } = "";
         /// <summary>
         /// 前端组件(.vue)

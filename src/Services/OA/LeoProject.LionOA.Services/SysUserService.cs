@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace LeoProject.LionOA.Services
 {
-    public class SysUserService:BaseService<SysUser>,ISysUserService
+    public partial class SysUserService:BaseService<SysUser>,ISysUserService
     {
         private OADbContext db;
         public SysUserService(OADbContext  _db):base(_db)
@@ -28,5 +28,8 @@ namespace LeoProject.LionOA.Services
         //    }
         //    return null;
         //}
+    }
+    public partial class SysUserService 
+    {
     }
 }

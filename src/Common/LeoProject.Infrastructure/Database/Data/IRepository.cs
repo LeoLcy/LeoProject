@@ -35,8 +35,8 @@ namespace LeoProject.Infrastructure.Database.Data
         TEntity FindFirstOrDefault(Expression<Func<TEntity, bool>> exp);
         TEntity FindSingle(Expression<Func<TEntity, bool>> exp);
         bool IsExist(Expression<Func<TEntity, bool>> exp);
-        IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> exp = null);
-        IQueryable<TEntity> Find(int pageindex = 1, int pagesize = 10, 
+        IQueryable<TEntity> GetQueryable(Expression<Func<TEntity, bool>> exp = null);
+        IQueryable<TEntity> GetPagedList(int pageindex = 1, int pagesize = 10, 
             Expression<Func<TEntity, bool>> exp = null);
         #endregion
         #region count

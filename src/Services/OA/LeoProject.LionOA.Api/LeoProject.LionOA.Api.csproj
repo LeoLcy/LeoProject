@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModel\Response\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\LeoProject.LionOA.EntityFrameworkCore\LeoProject.LionOA.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\LeoProject.LionOA.IServices\LeoProject.LionOA.IServices.csproj" />
   </ItemGroup>

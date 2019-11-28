@@ -116,11 +116,11 @@ namespace LeoProject.Infrastructure.Database.Data
         {
             return DBSet.Any(exp);
         }
-        public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> exp = null)
+        public IQueryable<TEntity> GetQueryable(Expression<Func<TEntity, bool>> exp = null)
         {
             return Filter(exp);
         }
-        public IQueryable<TEntity> Find(int pageindex = 1, int pagesize = 10,
+        public IQueryable<TEntity> GetPagedList(int pageindex = 1, int pagesize = 10,
             Expression<Func<TEntity, bool>> exp = null)
         {
             if (pageindex < 1) pageindex = 1;
