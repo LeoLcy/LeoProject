@@ -8,7 +8,7 @@ namespace LeoProject.Infrastructure.Tree
     /// <summary>
     /// 树形结构类
     /// </summary>
-    public class TreeNode : ITreeNode
+    public class TreeNode : ITreeItem 
     {
         public long Id { get; set; } = 0;
         /// <summary>
@@ -28,12 +28,12 @@ namespace LeoProject.Infrastructure.Tree
         /// </summary>
         public string TreePath { get; set; } = "";
 
-        public List<ITreeNode> Children { get; set; }
+        public List<TreeNode> Children { get; set; } //= new List<ITreeNode>();
     }
-    public interface ITreeNode: ITreeItem
-    {
-        List<ITreeNode> Children { get; set; }
-    }
+    //public interface ITreeNode: ITreeItem
+    //{
+    //    List<ITreeNode> Children { get; set; }
+    //}
     public class TreeItem : ITreeItem
     {
         public long Id { get; set; } = 0;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LeoProject.LionOA.Api.ViewModel.Response
 {
-    public class GrantedModuleTree : TreeNode
+    public class GrantedModule : TreeNode
     {
         /// <summary>
         /// 主页面URL

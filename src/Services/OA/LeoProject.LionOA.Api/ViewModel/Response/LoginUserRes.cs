@@ -43,7 +43,7 @@ namespace LeoProject.LionOA.Api.ViewModel.Response
         /// <summary>
         /// 用户权限树形结构
         /// </summary>
-        public GrantedModuleTree GrantedModule { get; set; }
+        public List<TreeNode> GrantedModules { get; set; }
         /// <summary>
         /// 权限列表
         /// </summary>

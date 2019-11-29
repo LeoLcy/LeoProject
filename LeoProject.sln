@@ -33,6 +33,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeoProject.Infrastructure",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeoProject.LionOA.IServices", "src\Services\OA\LeoProject.LionOA.IServices\LeoProject.LionOA.IServices.csproj", "{62652B9E-405F-4C28-9806-74A0A350511A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{024B8481-B2E1-4FC4-B249-07F50BFA8EC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeoPeoject.Test", "src\Test\LeoPeoject.Test\LeoPeoject.Test.csproj", "{45C5D22C-1578-4B7D-9925-6900BCD4BC5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +79,10 @@ Global
 		{62652B9E-405F-4C28-9806-74A0A350511A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62652B9E-405F-4C28-9806-74A0A350511A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62652B9E-405F-4C28-9806-74A0A350511A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45C5D22C-1578-4B7D-9925-6900BCD4BC5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45C5D22C-1578-4B7D-9925-6900BCD4BC5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45C5D22C-1578-4B7D-9925-6900BCD4BC5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45C5D22C-1578-4B7D-9925-6900BCD4BC5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +102,8 @@ Global
 		{C749F1B3-DB21-4FBB-8A32-60ED96B8FAFE} = {E81CCF15-EADC-40FE-8FCE-13D1BD560401}
 		{A54B579E-D653-444F-AACB-04B3E1185569} = {8008CFE1-BC9D-4FC1-95C3-5E6E69C947B0}
 		{62652B9E-405F-4C28-9806-74A0A350511A} = {4A3539F1-F85E-4DE4-B963-8E68774D9E85}
+		{024B8481-B2E1-4FC4-B249-07F50BFA8EC2} = {63816385-5A04-4532-B10B-4D1D55508CA6}
+		{45C5D22C-1578-4B7D-9925-6900BCD4BC5B} = {024B8481-B2E1-4FC4-B249-07F50BFA8EC2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F996CFEA-8FAC-4712-8D94-949BAE569049}

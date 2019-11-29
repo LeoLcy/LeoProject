@@ -2,24 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LeoProject.Infrastructure;
 using LeoProject.Infrastructure.Controllers;
-using LeoProject.Infrastructure.Controllers.Response;
-using LeoProject.Infrastructure.Tree;
-using LeoProject.LionOA.Api.ViewModel.Request;
-using LeoProject.LionOA.Api.ViewModel.Response;
-using LeoProject.LionOA.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace LeoProject.LionOA.Api.Controllers
 {
-    /// <summary>
-    /// 用户相关
-    /// </summary>
-    public class UserController : ApiBaseController
+    public class HomeController : ApiBaseController
     {
+
         private readonly ISysUserService _userService;
         private readonly ISysUserDeptService _userDeptService;
         private readonly ISysUserRoleService _userRoleService;
@@ -93,9 +84,10 @@ namespace LeoProject.LionOA.Api.Controllers
         }
         private async Task<List<SysModuleRes>> GetUserModules(List<long> roles)
         {
-            var temp = from relation in _roleModuleService.GetQueryable(m => roles.Contains(m.RoleId)).Select(m => new { m.ModuleId,m.FuncPermission })
+            var temp = from relation in _roleModuleService.GetQueryable(m => roles.Contains(m.RoleId)).Select(m => new { m.ModuleId, m.FuncPermission })
                        join module in _moduleService.GetQueryable() on relation.ModuleId equals module.Id
-                       select new SysModuleRes {
+                       select new SysModuleRes
+                       {
                            Id = module.Id,
                            Name = module.Name,
                            ParentId = module.ParentId,
@@ -114,7 +106,6 @@ namespace LeoProject.LionOA.Api.Controllers
             var modules = await temp.ToListAsync();
             return modules;
         }
- 
 
     }
 }
