@@ -77,5 +77,10 @@ namespace LeoProject.Infrastructure.Controllers.Response
         /// </summary>
         [Description("异常错误,请稍后再试")]
         Exception_ERROR = 20001,
+        /// <summary>
+        /// 没有权限访问
+        /// </summary>
+        [Description("没有权限访问")]
+        Forbidden_ERROR = 40003,
     }
 }

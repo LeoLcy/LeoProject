@@ -10,7 +10,6 @@ namespace LeoProject.Infrastructure.Controllers
     [ApiController]
     public class ApiBaseController:ControllerBase
     {
-        public UserInfo CurrentUser;
         public ApiBaseController()
         {
 

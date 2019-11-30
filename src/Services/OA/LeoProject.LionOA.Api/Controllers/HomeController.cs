@@ -2,9 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LeoProject.Infrastructure;
 using LeoProject.Infrastructure.Controllers;
+using LeoProject.Infrastructure.Controllers.Response;
+using LeoProject.Infrastructure.Tree;
+using LeoProject.LionOA.Api.ViewModel.Request;
+using LeoProject.LionOA.Api.ViewModel.Response;
+using LeoProject.LionOA.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LeoProject.LionOA.Api.Controllers
 {
@@ -17,7 +24,7 @@ namespace LeoProject.LionOA.Api.Controllers
         private readonly ISysRoleModuleService _roleModuleService;
         private readonly ISysModuleService _moduleService;
         private readonly ISysDeptRoleService _deptRoleService;
-        public UserController(ISysUserService userService,
+        public HomeController(ISysUserService userService,
             ISysUserDeptService userDeptService,
             ISysUserRoleService userRoleService,
             ISysRoleModuleService roleModuleService,
@@ -56,9 +63,9 @@ namespace LeoProject.LionOA.Api.Controllers
                 Avator = user.Avator,
                 Mobile = user.Mobile,
                 Email = user.Email,
-                Depts = new List<long>(),
-                Roles = new List<long>(),
-                GrantedModules = new List<TreeNode>()
+                //Depts = new List<long>(),
+                //Roles = new List<long>(),
+                //GrantedModules = new List<TreeNode>()
             };
             loginUserRes.Depts = await GetUserDepts(user.Id);
             loginUserRes.Roles = await GetUserRoles(user.Id, loginUserRes.Depts);
@@ -67,7 +74,21 @@ namespace LeoProject.LionOA.Api.Controllers
             var treeNode = new GrantedModule();
             TreeHelper.ListToTree(treeNode, moduleList);
             loginUserRes.GrantedModules = treeNode.Children;
-            return Success(loginUserRes);
+
+            Dictionary<string, string> dic = new Dictionary<string, string> ();
+            dic.Add("UserId", user.Id.ToString());
+            dic.Add("UserName", user.UserName);
+            dic.Add("NickName", user.NickName);
+            dic.Add("Avator", user.Avator);
+            dic.Add("Mobile", user.Mobile);
+            dic.Add("Email", user.Email);
+            var token = TokenHelper.GenerateToken(dic);
+            var res = new
+            {
+                token = token,
+                userInfo = loginUserRes
+            };
+            return Success(res);
         }
         private async Task<List<long>> GetUserDepts(long userId)
         {

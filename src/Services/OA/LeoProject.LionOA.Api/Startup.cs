@@ -30,6 +30,16 @@ namespace LeoProject.LionOA.Api
             services.AddDbContext<OADbContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                // Make the session cookie essential
+                options.Cookie.IsEssential = true;
+            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -47,6 +57,7 @@ namespace LeoProject.LionOA.Api
             }
 
             app.UseHttpsRedirection();
+            app.UseSession();
             app.UseMvc();
         }
     }

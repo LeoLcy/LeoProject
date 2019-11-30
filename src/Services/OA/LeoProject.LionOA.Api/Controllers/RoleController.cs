@@ -30,11 +30,18 @@ namespace LeoProject.LionOA.Api.Controllers
             {
                 return Error("名字不能为空");
             }
+            
             SysRole role = new SysRole {
                 Name = req.Name,
                 Remark = req.Remark,
-                CreateBy = 
+                CreateBy = 0
             };
+            var res = await _sysRoleService.InsertAsync(role);
+            if (res > 0)
+            {
+                return Success("添加成功");
+            }
+            return Success("添加失败");
         }
     }
 }
