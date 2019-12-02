@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EasyCaching.Core;
+using EasyCaching.InMemory;
 using LeoProject.LionOA.EntityFrameworkCore.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,7 +33,12 @@ namespace LeoProject.LionOA.Api
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
             services.AddDistributedMemoryCache();
-
+            //configuration
+            services.AddEasyCaching(options =>
+            {
+                //use memory cache that named default
+                options.UseInMemory("default");
+            });
             services.AddSession(options =>
             {
                 // Set a short timeout for easy testing.

@@ -2,34 +2,37 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EasyCaching.Core;
 using LeoProject.Infrastructure;
 using LeoProject.Infrastructure.Controllers;
 using LeoProject.Infrastructure.Controllers.Response;
+using LeoProject.Infrastructure.Helpers;
 using LeoProject.Infrastructure.Tree;
+using LeoProject.LionOA.Api.ViewModel;
 using LeoProject.LionOA.Api.ViewModel.Request;
 using LeoProject.LionOA.Api.ViewModel.Response;
 using LeoProject.LionOA.IServices;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace LeoProject.LionOA.Api.Controllers
 {
-    public class HomeController : ApiBaseController
+    public class HomeController : OABaseController
     {
-
         private readonly ISysUserService _userService;
         private readonly ISysUserDeptService _userDeptService;
         private readonly ISysUserRoleService _userRoleService;
         private readonly ISysRoleModuleService _roleModuleService;
         private readonly ISysModuleService _moduleService;
         private readonly ISysDeptRoleService _deptRoleService;
+        //IRedisCachingProvider
         public HomeController(ISysUserService userService,
             ISysUserDeptService userDeptService,
             ISysUserRoleService userRoleService,
             ISysRoleModuleService roleModuleService,
             ISysModuleService moduleService,
-            ISysDeptRoleService deptRoleService)
+            ISysDeptRoleService deptRoleService,
+            IEasyCachingProviderFactory factory) : base(factory)
         {
             _userService = userService;
             _userDeptService = userDeptService;
@@ -39,6 +42,7 @@ namespace LeoProject.LionOA.Api.Controllers
             _deptRoleService = deptRoleService;
         }
 
+        [AllowAnonymous]
         public async Task<ApiResult> Login(LoginReq login)
         {
             if (string.IsNullOrEmpty(login.UserName))
@@ -55,7 +59,7 @@ namespace LeoProject.LionOA.Api.Controllers
             {
                 return Error("用户名或密码错误");
             }
-            LoginUserRes loginUserRes = new LoginUserRes
+            UserInfo loginUserRes = new UserInfo
             {
                 UserId = user.Id,
                 UserName = user.UserName,
@@ -67,26 +71,29 @@ namespace LeoProject.LionOA.Api.Controllers
                 //Roles = new List<long>(),
                 //GrantedModules = new List<TreeNode>()
             };
-            loginUserRes.Depts = await GetUserDepts(user.Id);
-            loginUserRes.Roles = await GetUserRoles(user.Id, loginUserRes.Depts);
-            var moduleList = await GetUserModules(loginUserRes.Roles);
-            loginUserRes.ModuleList = moduleList;
+            var depts = await GetUserDepts(user.Id);
+            var roles = await GetUserRoles(user.Id, depts);
+            var moduleList = await GetUserModules(roles);
+
             var treeNode = new GrantedModule();
             TreeHelper.ListToTree(treeNode, moduleList);
-            loginUserRes.GrantedModules = treeNode.Children;
+            //loginUserRes.GrantedModules = treeNode.Children;
 
-            Dictionary<string, string> dic = new Dictionary<string, string> ();
-            dic.Add("UserId", user.Id.ToString());
-            dic.Add("UserName", user.UserName);
-            dic.Add("NickName", user.NickName);
-            dic.Add("Avator", user.Avator);
-            dic.Add("Mobile", user.Mobile);
-            dic.Add("Email", user.Email);
-            var token = TokenHelper.GenerateToken(dic);
+            #region 设置用户基本信息
+            _cache.Set($"User${user.Id}", loginUserRes, TimeSpan.FromDays(1));
+            #endregion
+
+            Dictionary<string, string> dic = new Dictionary<string, string>
+            {
+                { "UserId", user.Id.ToString() },
+                { "UserName", user.UserName }
+            };
+            var token = TokenHelper.GenerateToken(dic, 60);
             var res = new
             {
                 token = token,
-                userInfo = loginUserRes
+                userInfo = loginUserRes,
+                moduleList
             };
             return Success(res);
         }

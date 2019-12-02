@@ -1,11 +1,13 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using JWT;
+using JWT.Serializers;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace LeoProject.Infrastructure
+namespace LeoProject.Infrastructure.Helpers
 {
     public static class TokenHelper
     {
@@ -61,6 +63,24 @@ namespace LeoProject.Infrastructure
                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+        public static string GetDecodeTokenString(string token, string securityKey = "")
+        {
+            if (string.IsNullOrEmpty(token))
+            {
+                throw new Exception("token 为空");
+            }
+            IJsonSerializer serializer = new JsonNetSerializer();
+            IDateTimeProvider provider = new UtcDateTimeProvider();
+            IJwtValidator validator = new JwtValidator(serializer, provider);
+            IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
+            IJwtDecoder decoder = new JwtDecoder(serializer, validator, urlEncoder);
+            var payload = decoder.Decode(token, securityKey, verify: true);
+            if (string.IsNullOrEmpty(payload))
+            {
+                throw new Exception("token 为空");
+            }
+            return payload;
         }
         /// <summary>
         /// 验证身份 验证签名的有效性,

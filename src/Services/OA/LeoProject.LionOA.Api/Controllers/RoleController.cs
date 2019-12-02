@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EasyCaching.Core;
 using LeoProject.Infrastructure.Controllers;
 using LeoProject.Infrastructure.Controllers.Response;
 using LeoProject.LionOA.Api.ViewModel.Request.Role;
@@ -12,10 +13,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LeoProject.LionOA.Api.Controllers
 {
-    public class RoleController : ApiBaseController
+    public class RoleController : OABaseController
     {
         private readonly ISysRoleService _sysRoleService;
-        public RoleController(ISysRoleService sysRoleService)
+        public RoleController(ISysRoleService sysRoleService,
+            IEasyCachingProviderFactory factory) : base(factory)
         {
             _sysRoleService = sysRoleService;
         }
@@ -30,11 +32,12 @@ namespace LeoProject.LionOA.Api.Controllers
             {
                 return Error("名字不能为空");
             }
-            
-            SysRole role = new SysRole {
+
+            SysRole role = new SysRole
+            {
                 Name = req.Name,
                 Remark = req.Remark,
-                CreateBy = 0
+                CreateBy = CurrentUser.UserId
             };
             var res = await _sysRoleService.InsertAsync(role);
             if (res > 0)
