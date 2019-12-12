@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EasyCaching.Core;
 using LeoProject.Infrastructure.Controllers;
 using LeoProject.Infrastructure.Filters;
 using LeoProject.LionOA.Api.ViewModel;
@@ -16,18 +15,19 @@ namespace LeoProject.LionOA.Api.Controllers
     public class OABaseController : ApiBaseController
     {
         public UserInfo CurrentUser;
-        public  IEasyCachingProvider _cache;
-        public OABaseController(IEasyCachingProviderFactory factory)
+        public OABaseController()
         {
             var  tokenUserInfo = Request.GetTokenUserInfo();
-            CurrentUser.UserId = tokenUserInfo.UserId;
-            _cache = factory.GetCachingProvider("default");
-            var userCache = _cache.Get<UserInfo>($"User${tokenUserInfo.UserId}");
-            if (userCache.HasValue)
+            if (tokenUserInfo != null)
             {
-                CurrentUser = userCache.Value;
+                CurrentUser.UserId = tokenUserInfo.UserId;
+
+                var userCache = RedisHelper.Get<UserInfo>($"User${tokenUserInfo.UserId}");
+                if (userCache != null)
+                {
+                    CurrentUser = userCache;
+                }
             }
-            
         }
 
     }

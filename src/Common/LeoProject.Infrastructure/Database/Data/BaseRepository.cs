@@ -89,6 +89,11 @@ namespace LeoProject.Infrastructure.Database.Data
 
             return await SaveAsync();
         }
+        public async Task<int> DeleteRangeAsync(IEnumerable<TEntity> entities)
+        {
+            DBSet.RemoveRange(entities);
+            return await SaveAsync();
+        }
         public async Task<int> DeleteRangeAsync(IEnumerable<long> ids)
         {
             var entities = DBSet.Where(m => ids.Contains(m.Id));
@@ -173,6 +178,11 @@ namespace LeoProject.Infrastructure.Database.Data
             var entities = DBSet.Where(exp);
             DBSet.RemoveRange(entities);
 
+            return Save();
+        }
+        public int DeleteRange(IEnumerable<TEntity> entities)
+        {
+            DBSet.RemoveRange(entities);
             return Save();
         }
         public int DeleteRange(IEnumerable<long> ids)

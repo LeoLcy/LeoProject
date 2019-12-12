@@ -25,7 +25,7 @@ namespace LeoProject.Infrastructure.Database
         [MaxLength(50)]
         public string ParentName { get; set; } = "";
         /// <summary>
-        /// 父子路径，以“|”分开
+        /// 父子路径，以“,”分开
         /// </summary>
         [MaxLength(200)]
         public string TreePath { get; set; } = "";

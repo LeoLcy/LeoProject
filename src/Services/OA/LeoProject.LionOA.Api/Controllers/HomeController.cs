@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EasyCaching.Core;
 using LeoProject.Infrastructure;
 using LeoProject.Infrastructure.Controllers;
 using LeoProject.Infrastructure.Controllers.Response;
@@ -31,8 +30,7 @@ namespace LeoProject.LionOA.Api.Controllers
             ISysUserRoleService userRoleService,
             ISysRoleModuleService roleModuleService,
             ISysModuleService moduleService,
-            ISysDeptRoleService deptRoleService,
-            IEasyCachingProviderFactory factory) : base(factory)
+            ISysDeptRoleService deptRoleService)
         {
             _userService = userService;
             _userDeptService = userDeptService;
@@ -80,7 +78,7 @@ namespace LeoProject.LionOA.Api.Controllers
             //loginUserRes.GrantedModules = treeNode.Children;
 
             #region 设置用户基本信息
-            _cache.Set($"User${user.Id}", loginUserRes, TimeSpan.FromDays(1));
+            RedisHelper.Set($"User${user.Id}", loginUserRes, 60*60*24);
             #endregion
 
             Dictionary<string, string> dic = new Dictionary<string, string>

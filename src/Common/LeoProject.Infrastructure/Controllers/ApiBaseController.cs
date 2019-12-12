@@ -14,7 +14,7 @@ namespace LeoProject.Infrastructure.Controllers
         {
 
         }
-
+        #region 成功
         protected ApiResult Success(string message = "")
         {
             return new ApiResult(ResultCode.SUCCESS, message);
@@ -27,6 +27,17 @@ namespace LeoProject.Infrastructure.Controllers
         {
             return new ApiResult(ResultCode.SUCCESS, message,data) ;
         }
+        #endregion
+        #region 分页数据返回
+        protected ApiResultPaged<T> Success<T>(int total,T data)
+        {
+            return new ApiResultPaged<T>(total,data);
+        }
+        protected ApiResultPaged<T> Success<T>(int total, T data, string msg = "")
+        {
+            return new ApiResultPaged<T>(total, data,msg);
+        }
+        #endregion
 
         protected ApiResult Error(string message = "")
         {
@@ -36,6 +47,14 @@ namespace LeoProject.Infrastructure.Controllers
         protected ApiResult Error(ResultCode code, string message = "")
         {
             return new ApiResult(code, message);
+        }
+        protected ApiResultPaged<T> Error<T>(string message = "")
+        {
+            return new ApiResultPaged<T>(ResultCode.BUSSESS_ERROR, message);
+        }
+        protected ApiResultPaged<T> Error<T>(ResultCode code, string message = "")
+        {
+            return new ApiResultPaged<T>(code, message);
         }
     }
 }

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EasyCaching.Core;
-using EasyCaching.InMemory;
 using LeoProject.LionOA.EntityFrameworkCore.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,21 +30,21 @@ namespace LeoProject.LionOA.Api
             services.AddDbContext<OADbContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
-            services.AddDistributedMemoryCache();
-            //configuration
-            services.AddEasyCaching(options =>
-            {
-                //use memory cache that named default
-                options.UseInMemory("default");
-            });
-            services.AddSession(options =>
-            {
-                // Set a short timeout for easy testing.
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
-                options.Cookie.HttpOnly = true;
-                // Make the session cookie essential
-                options.Cookie.IsEssential = true;
-            });
+            #region 使用redis存储
+            //csredis
+            RedisHelper.Initialization(new CSRedis.CSRedisClient(Configuration["Redis"]));
+            #endregion
+            #region 使用session保存状态
+            //services.AddDistributedMemoryCache();
+            //services.AddSession(options =>
+            //{
+            //    // Set a short timeout for easy testing.
+            //    options.IdleTimeout = TimeSpan.FromSeconds(10);
+            //    options.Cookie.HttpOnly = true;
+            //    // Make the session cookie essential
+            //    options.Cookie.IsEssential = true;
+            //});
+            #endregion
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -64,7 +62,7 @@ namespace LeoProject.LionOA.Api
             }
 
             app.UseHttpsRedirection();
-            app.UseSession();
+            //app.UseSession();
             app.UseMvc();
         }
     }

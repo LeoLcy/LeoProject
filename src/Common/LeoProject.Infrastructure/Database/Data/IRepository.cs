@@ -27,6 +27,7 @@ namespace LeoProject.Infrastructure.Database.Data
         Task<int> DeleteByIdAsync(long primaryId);
         Task<int> DeleteAsync(TEntity entity);
         Task<int> DeleteAsync(Expression<Func<TEntity, bool>> exp);
+        Task<int> DeleteRangeAsync(IEnumerable<TEntity> entities);
         Task<int> DeleteRangeAsync(IEnumerable<long> ids);
         #endregion
         #endregion
@@ -51,6 +52,7 @@ namespace LeoProject.Infrastructure.Database.Data
         int Delete(TEntity entity);
         int Delete(Expression<Func<TEntity, bool>> exp);
         int DeleteRange(IEnumerable<long> ids);
+        int DeleteRange(IEnumerable<TEntity> entities);
         #endregion
 
         int ExecuteSql(string sql, params object[] parameters);

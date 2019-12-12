@@ -118,7 +118,10 @@ namespace LeoProject.Infrastructure.Filters
             TokenUserInfo userInfo = null;
             try
             {
-                userInfo = JsonConvert.DeserializeObject<TokenUserInfo>(userInfoStr);
+                if (!string.IsNullOrEmpty(userInfoStr))
+                {
+                    userInfo = JsonConvert.DeserializeObject<TokenUserInfo>(userInfoStr);
+                }
             }
             catch (Exception ex)
             {

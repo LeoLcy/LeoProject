@@ -48,6 +48,20 @@ namespace LeoProject.Infrastructure.Controllers.Response
         {
             Total = total;
         }
+        public ApiResultPaged(int total, T data,string msg) : base(ResultCode.SUCCESS, msg, data)
+        {
+            Total = total;
+        }
+        /// <summary>
+        /// 出错传入错误代码和异常消息
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="msg"></param>
+        public ApiResultPaged(ResultCode code, string msg):base(code, msg)
+        {
+            Total = 0;
+            Data = default(T);
+        }
     }
     /// <summary>
     /// 返回值Code
