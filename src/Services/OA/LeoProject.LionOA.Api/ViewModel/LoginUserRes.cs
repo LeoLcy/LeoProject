@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LeoProject.LionOA.Api.ViewModel.Response
+namespace LeoProject.LionOA.Api.ViewModel
 {
     /// <summary>
     /// 登录后返回的用户对象

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LeoProject.LionOA.Api.ViewModel.Request
+namespace LeoProject.LionOA.Api.ViewModel
 {
     /// <summary>
     /// 登录实体对象

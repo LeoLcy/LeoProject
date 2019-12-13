@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LeoProject.LionOA.Api.ViewModel.Request.Role
+namespace LeoProject.LionOA.Api.ViewModel.Role
 {
     public class SearchRoleReq:PageRequestBase
     {

@@ -1,4 +1,5 @@
 ﻿using LeoProject.Infrastructure;
+using LeoProject.Infrastructure.Helpers;
 using LeoProject.LionOA.Core;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace LeoProject.LionOA.EntityFrameworkCore.EntityFrameworkCore.Seed
                 {
                     var sysUser = new SysUser
                     {
-                        Password = Md5.Encrypt("123456"),
+                        Password = Md5Helper.Encrypt("123456"),
                         UserName = "admin",
                         NickName = "leo"
                     };

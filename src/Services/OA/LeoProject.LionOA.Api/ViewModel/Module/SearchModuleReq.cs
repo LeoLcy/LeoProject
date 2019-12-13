@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LeoProject.LionOA.Api.ViewModel.Request.Module
+namespace LeoProject.LionOA.Api.ViewModel.Module
 {
     public class SearchModuleReq : PageRequestBase
     {

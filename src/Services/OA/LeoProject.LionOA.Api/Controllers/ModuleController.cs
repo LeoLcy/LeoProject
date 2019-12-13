@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using LeoProject.Infrastructure.Controllers;
 using LeoProject.Infrastructure.Controllers.Response;
-using LeoProject.LionOA.Api.ViewModel.Request.Role;
 using LeoProject.LionOA.Core;
 using LeoProject.LionOA.IServices;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LeoProject.Infrastructure.Extensions;
-using LeoProject.LionOA.Api.ViewModel.Request.Module;
+using LeoProject.LionOA.Api.ViewModel.Module;
 using LeoProject.Infrastructure.Tree;
 
 namespace LeoProject.LionOA.Api.Controllers
@@ -158,9 +155,21 @@ namespace LeoProject.LionOA.Api.Controllers
             {
                 moduleList = await _sysModuleService.GetQueryable().ToListAsync();
             }
-
-            TreeNode treeNode = new TreeNode();
-            TreeHelper.ListToTree(treeNode, moduleList);
+            List<ModuleTreeItemRes> moduleTreeItemList = moduleList.OrderBy(m=>m.Sort).Select(m=>new ModuleTreeItemRes {
+                Id = m.Id,
+                Name = m.Name,
+                ParentId = m.ParentId,
+                ParentName = m.ParentName,
+                Icon = m.Icon,
+                FuncPermission = m.FuncPermission,
+                IsAutoExpand = m.IsAutoExpand,
+                IsLeaf = m.IsLeaf,
+                Sort = m.Sort,
+                TreePath = m.TreePath
+            }).ToList();
+            ModuleTreeNodeRes treeNode = new ModuleTreeNodeRes();
+            TreeHelper.ListToTree(treeNode, moduleTreeItemList);
+            return Success(treeNode.Children);
         }
     }
 }

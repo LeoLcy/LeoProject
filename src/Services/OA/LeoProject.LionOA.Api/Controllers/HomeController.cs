@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LeoProject.Infrastructure;
-using LeoProject.Infrastructure.Controllers;
 using LeoProject.Infrastructure.Controllers.Response;
 using LeoProject.Infrastructure.Helpers;
 using LeoProject.Infrastructure.Tree;
 using LeoProject.LionOA.Api.ViewModel;
-using LeoProject.LionOA.Api.ViewModel.Request;
-using LeoProject.LionOA.Api.ViewModel.Response;
 using LeoProject.LionOA.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -51,7 +47,7 @@ namespace LeoProject.LionOA.Api.Controllers
             {
                 return Error("密码不能为空");
             }
-            var password = Md5.Encrypt(login.Password);
+            var password = Md5Helper.Encrypt(login.Password);
             var user = await _userService.FindFirstOrDefaultAsync(m => m.UserName == login.UserName && m.Password == password);
             if (user == null)
             {
@@ -89,7 +85,7 @@ namespace LeoProject.LionOA.Api.Controllers
             var token = TokenHelper.GenerateToken(dic, 60);
             var res = new
             {
-                token = token,
+                token,
                 userInfo = loginUserRes,
                 moduleList
             };

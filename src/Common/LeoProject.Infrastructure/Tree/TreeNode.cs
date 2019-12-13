@@ -6,7 +6,7 @@ using System.Text;
 namespace LeoProject.Infrastructure.Tree
 {
     /// <summary>
-    /// 树形结构类
+    /// 树形结构节点类
     /// </summary>
     public class TreeNode : ITreeItem 
     {
@@ -34,6 +34,9 @@ namespace LeoProject.Infrastructure.Tree
     //{
     //    List<ITreeNode> Children { get; set; }
     //}
+    /// <summary>
+    /// 生成树形结构的列表项
+    /// </summary>
     public class TreeItem : ITreeItem
     {
         public long Id { get; set; } = 0;

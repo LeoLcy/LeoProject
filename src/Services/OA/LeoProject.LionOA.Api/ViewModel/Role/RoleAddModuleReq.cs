@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LeoProject.LionOA.Api.ViewModel.Request.Role
+namespace LeoProject.LionOA.Api.ViewModel.Role
 {
     /// <summary>
     /// 角色分配模块请求参数
