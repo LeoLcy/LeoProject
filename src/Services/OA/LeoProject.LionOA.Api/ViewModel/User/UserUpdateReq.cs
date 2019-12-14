@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace LeoProject.LionOA.Api.ViewModel.Role
 {
+    /// <summary>
+    /// 更新用户
+    /// </summary>
     public class UserUpdateReq
     {
         public long Id { get; set; } = 0;

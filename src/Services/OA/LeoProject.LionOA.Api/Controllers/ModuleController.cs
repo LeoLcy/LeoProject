@@ -63,7 +63,15 @@ namespace LeoProject.LionOA.Api.Controllers
             Expression<Func<SysModule, bool>> exp = m => true;
             if (req.ParentId > 0)
             {
-                exp = exp.And(m => m.ParentId == req.ParentId);
+                if (req.IsAllChildren)
+                {
+                    var path = "," + req.ParentId + ",";
+                    exp = exp.And(m => m.TreePath.Contains(path));
+                }
+                else
+                {
+                    exp = exp.And(m => m.ParentId == req.ParentId);
+                }
             }
             var query = _sysModuleService.GetQueryable(exp);
 

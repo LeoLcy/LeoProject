@@ -12,5 +12,9 @@ namespace LeoProject.LionOA.Api.ViewModel.Module
         /// 父ID
         /// </summary>
         public long ParentId { get; set; } = -1;
+        /// <summary>
+        /// 是否查询所以子项
+        /// </summary>
+        public bool IsAllChildren { get; set; } = false;
     }
 }
